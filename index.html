@@ -22,18 +22,35 @@
 var i = 0;
 var errorCount = 0;
 var dadTalking = false;
+var timer = 0;
+var sceneA = 0;
+var sceneD = 0;
     
-$( document ).ready(function() {
+$( document ).ready(function() {  
 //    short("", 500, "&quot;I'm ready&quot;");
-    var traffic = new buzz.sound("assets/traffic_short.mp3");
-    traffic.loop().play().fadeIn();
+//    var traffic = new buzz.sound("assets/traffic_short.mp3");
+//    traffic.loop().play().fadeIn();
 });
 
+var firstPrompt = setTimeout(function(){short("", 500, "&quot;I'm ready&quot;");}, 0);
+var timerAdd = setInterval(function(){
+    timer += 1;
+    if (timer > 60){
+        restart();
+        timer = 0;
+    }
+    //$("#prompt").text(timer + " seconds");
+}, 1000);    
+    
 function restart(){
     i = 0;
     errorCount = 0;
     dadTalking = false;
-    
+    sceneA = 0;
+    sceneD = 0;
+    short("", 1000, "&quot;I'm ready&quot;");
+    $("#dialogue").css("text-align", "left");
+    new TypeIt('#dialogue').pause(500).type("<b>Welcome,</b> to begin the memory, please say ");
 } 
     
 if (annyang) {
@@ -197,7 +214,6 @@ function short(name, promptDelay, prompt)
         new TypeIt("#prompt").pause(promptDelay).type(prompt);
     }
 
-var sceneA = 0;
 function Annie(){
     dadTalking = false;
     sceneA += 1;
@@ -223,7 +239,6 @@ function Annie(){
     }
 }
     
-var sceneD = 0;
 function Dad(){
     dadTalking = true;
     sceneD += 1;
