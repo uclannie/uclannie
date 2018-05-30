@@ -25,11 +25,15 @@ var dadTalking = false;
 var timer = 0;
 var sceneA = 0;
 var sceneD = 0;
+var traffic = new buzz.sound("assets/traffic_short.mp3", {
+    preload: true,
+    autoplay: true,
+    loop: true
+});
     
 $( document ).ready(function() {  
 //    short("", 500, "&quot;I'm ready&quot;");
-    var traffic = new buzz.sound("assets/traffic_short.mp3");
-    traffic.loop().play().fadeIn();
+
 });
 
 var firstPrompt = setTimeout(function(){short("", 500, "&quot;I'm ready&quot;");}, 0);
@@ -116,7 +120,6 @@ function micFade(){
 }
     
 function dad1(){
-    var traffic = new buzz.sound("assets/traffic_short.mp3");
     traffic.loop().play().fadeIn();
     imgChange("steering.jpg");
     short("Dad", 17000, "&quot;...I want&quot;");
