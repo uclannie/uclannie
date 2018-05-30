@@ -28,14 +28,14 @@ var sceneD = 0;
     
 $( document ).ready(function() {  
 //    short("", 500, "&quot;I'm ready&quot;");
-//    var traffic = new buzz.sound("assets/traffic_short.mp3");
-//    traffic.loop().play().fadeIn();
+    var traffic = new buzz.sound("assets/traffic_short.mp3");
+    traffic.loop().play().fadeIn();
 });
 
 var firstPrompt = setTimeout(function(){short("", 500, "&quot;I'm ready&quot;");}, 0);
 var timerAdd = setInterval(function(){
     timer += 1;
-    if (timer > 60){
+    if (timer > 300){
         restart();
         timer = 0;
     }
