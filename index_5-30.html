@@ -20,36 +20,21 @@
         
 <script>
 var i = 0;
-var errorCount = 0;
-var dadTalking = false;
-    
-$( document ).ready(function() {
-//    short("", 500, "&quot;I'm ready&quot;");
-    var traffic = new buzz.sound("assets/traffic_short.mp3");
-    traffic.loop().play().fadeIn();
-});
-
-function restart(){
-    i = 0;
-    errorCount = 0;
-    dadTalking = false;
-    
-} 
     
 if (annyang) {
   var commands = {
-    "I'm (ready)": Dad,
-      "I (want)": Annie,
-      "(It's the one thing) I love doing": Dad,
-      "I want to be honest (with you)": Annie,
-      "I want to let you know (how I truly feel)":Dad,
-      "I want to let you know how I feel":Dad,
-      "No (that's not what I meant)":Annie,
-      "I wasn't trying to start a fight":Dad,
-      "(I'm not saying that) I don't want to work hard":Annie,
-      "I just wanted to let you know (what I actually want to do)":Dad,
-      "But there's no point in telling you (if it's just going to make you angry)":Annie,
-      "It's okay (this conversation will be over soon)":Dad,
+    "I'm (ready)": dad1,
+      "I (want)": annie1,
+      "(It's the one thing) I love doing": dad2,
+      "I want to be honest (with you)": annie2,
+      "I want to let you know (how I truly feel)":dad3,
+      "I want to let you know how I feel":dad3,
+      "No (that's not what I meant)":annie3,
+      "I wasn't trying to start a fight":dad4,
+      "It's not that (I don't want a real job)":annie4,
+      "I just wanted to let you know (what I want to do)":dad5,
+      "But there's no point in telling you (if it's just going to make you angry)":annie5,
+      "It's okay (this conversation will be over soon)":dad6,
       "(I'm being) given a chance": thankyou,
       
   };
@@ -65,7 +50,7 @@ annyang.addCallback('result', function(phrases) {
     
 annyang.addCallback('resultNoMatch', function(phrases){
     var count;
-    var responses = ["Hah? What did you say?", "I can't hear you. Speak up.", "Hah?"]
+    var responses = ["Hah? Can you say that again?", "I can't hear you. Speak up.", "Hah?"]
     $("#dialogue").css("text-align", "left");
     new TypeIt("#annie").pause(500).delete();
     new TypeIt("#name").pause(500).type("Dad");
@@ -77,13 +62,8 @@ annyang.addCallback('resultNoMatch', function(phrases){
     else
         i = 0;
     
-    if(errorCount > 3){
-        if (dadTalking)
-            Annie();
-        else
-            Dad();
-        errorCount = 0;
-    }
+    
+    
 });
     
   annyang.start();
@@ -99,11 +79,9 @@ function micFade(){
 }
     
 function dad1(){
-    var traffic = new buzz.sound("assets/traffic_short.mp3");
-    traffic.loop().play().fadeIn();
-    imgChange("steering.jpg");
-    short("Dad", 17000, "&quot;...I want&quot;");
-    new TypeIt('#dialogue').pause(4500).type("Hey, ").pause(1000).type("so you're graduating from school in a couple months.").pause(1500).delete().pause(1500).type("Do...").pause(500).delete(5).type("Do you know what you would want to do?");    
+    //imgChange("steering.jpg");
+    short("Dad", 13000, "&quot;...I want&quot;");
+    new TypeIt('#dialogue').pause(500).type("Hey, ").pause(1000).type("so you're graduating from school in a couple months.").pause(1500).delete().pause(1500).type("Do...").pause(500).delete(5).type("Do you know what you would want to do?");    
 }
 
 function dad2(){
@@ -117,25 +95,25 @@ function dad3(){
 }    
 
 function dad4(){
-    short("Dad", 8000, "&quot;I'm not saying that I don't want to work hard...&quot;");
+    short("Dad", 8000, "&quot;It's not that I don't want a real job...&quot;");
     new TypeIt("#dialogue", {speed:80, deleteSpeed:10}).pause(500).type("What are you going to do?").pause(1000).delete().options({speed: 30}).type("<b>Paint all day!?</b>").pause(500).delete().options({speed: 15}).type("Artists are just lazy people who don’t want to work hard!");
 }     
 
 function dad5(){
-    short("Dad", 5000, "&quot;But there's no point in telling you if it's just going to make you angry.&quot;");
-    new TypeIt("#dialogue", {speed:10, deletSpeed:10,breakLines: true}).pause(500).type("........").pause(1000).options({speed: 100}).break().type("........").pause(500).options({speed: 150}).delete().type("........");
+    short("Dad", 5000, "&quot;It's okay. This conversation will be over soon.&quot;");
+    new TypeIt("#dialogue", {speed:10, deletSpeed:10,breakLines: true}).pause(500).type("........").pause(1000).options({speed: 100}).break().type("........").pause(500).options({speed: 150}).break().type("........");
 }     
 
 function dad6(){
-    short("Dad", 0, "");
-    new TypeIt("#prompt").pause(8000).type("!").pause(500).delete().type("&quot;I'm being given a chance!&quot;");
+    document.getElementById("name").innerHTML="Dad";
+    new TypeIt("#prompt").pause(8000).type("!").pause(500).delete().type("&quot;I'm being given a chance...&quot;");
     new TypeIt("#dialogue", {speed:150, deletSpeed:10}).pause(500).type("...").pause(1000).options({speed: 100}).type("What kind ").pause(1500).options({speed: 150}).type("of art?");
 }   
     
 function annie1(){
-    imgChange("lookingdown.jpg");
-    short("Annie", 7000, "&quot;It's the one thing I love doing.&quot;");
-    new TypeIt("#dialogue").pause(3000).type("I...").pause(1500).delete().type("I want to pursue art.");
+
+    short("Annie", 5000, "&quot;It's the one thing I love doing.&quot;");
+    new TypeIt("#dialogue").pause(1000).type("I...").pause(1500).delete().type("I want to pursue art.");
 }    
     
 function annie2(){
@@ -149,30 +127,29 @@ function annie3(){
 }
 
 function annie4(){
-    short("Annie", 3000, "&quot;I just wanted to let you know what I actually want to do.&quot;");
+    short("Annie", 3000, "&quot;I just wanted to let you know what I want to do.&quot;");
     new TypeIt("#dialogue").pause(2000).type("...");
 }    
 
 function annie5(){
-    short("Annie", 3000, "&quot;It's okay. This conversation will be over soon.&quot;");
+    short("Annie", 3000, "&quot;But there's no point in telling you if it's just going to make you angry.&quot;");
     new TypeIt("#dialogue").pause(2000).type("...");
 }   
 
 function thankyou(){
     short("",0,"");
     new TypeIt("#doze", {speed:150, deleteSpeed:50}).pause(1500).type("多謝").pause(4000).delete();
-    $("#dialogue").css({"text-align":"center","left":"24%"});
-    new TypeIt("#dialogue", {speed:100, deleteSpeed:50}).pause(5000).type("&quot;<b>doh jie</b>&quot;").pause(3000).delete().pause(500).type("&quot;<b>Thank you.</b>&quot;").pause(3000).delete();
+    new TypeIt("#dialogue", {speed:100, deleteSpeed:50}).pause(5000).type("<b>&quot;doh jie&quot;</b>").pause(3000).delete().pause(500).type("<b>&quot;Thank you&quot;</b>").pause(3000).delete();
 }
 
 function imgChange(source){
     var string = "assets/imgs/";
     string = string.concat(source);
     $("#bg").attr("src", string);
-    $("#bg").fadeIn(2500);
+    $("#bg").fadeIn(3000);
     setInterval(function(){
-        $("#bg").fadeOut(1000);
-    }, 6000);
+        $("#bg").fadeOut(2000);
+    }, 5000);
 }    
     
 function short(name, promptDelay, prompt)
@@ -189,70 +166,16 @@ function short(name, promptDelay, prompt)
                 new TypeIt("#name").pause(500).delete();
                 new TypeIt("#annie", {startDelete:true}).pause(500).type(name);
             }
-        else if (name=="")
-            {
-                new TypeIt("#name").pause(500).delete();
-                new TypeIt("#annie").pause(500).delete();
-            }
         new TypeIt("#prompt").pause(promptDelay).type(prompt);
     }
 
-var sceneA = 0;
-function Annie(){
-    dadTalking = false;
-    sceneA += 1;
-    switch(sceneA){
-        case 1: 
-            annie1();
-            break;
-        case 2:
-            annie2();
-            break;
-        case 3:
-            annie3();
-            break;
-        case 4:
-            annie4();
-            break;
-        case 5:
-            annie5();
-            break;
-        default:
-            break;
-                
-    }
-}
-    
-var sceneD = 0;
-function Dad(){
-    dadTalking = true;
-    sceneD += 1;
-    switch(sceneD){
-        case 1: 
-            dad1();
-            break;
-        case 2:
-            dad2();
-            break;
-        case 3:
-            dad3();
-            break;
-        case 4:
-            dad4();
-            break;
-        case 5:
-            dad5();
-            break;
-        case 6:
-            dad6();
-            break;
-        default:
-            break;
-                
-    }
-}
+$( document ).ready(function() {
+    short("", 500, "&quot;I'm ready&quot;");
+    var traffic = new buzz.sound("assets/traffic_short.mp3");
+    traffic.loop().play().fadeIn();
+});
 
-   
+    
 </script>   
     </head>
     
@@ -261,9 +184,8 @@ function Dad(){
     
     <body>
         
-        <button type="button" onclick="Dad();">dad</button>
-        <button type="button" onclick="Annie();">annie</button>
-        <button type="button" onclick="thankyou();">end</button><br/>
+        <button type="button" onclick="dad1();">dad</button>
+        <button type="button" onclick="annie1();">annie</button><br/>
         <span id="name"></span>
         <span id="annie"></span>
         <span id="dialogue"><b>Welcome,</b> to begin the memory, please say </span>
