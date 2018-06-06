@@ -24,12 +24,24 @@ var errorCount = 0;
 var dadTalking = false;
 var timer = 0;
 var sceneA = 0;
-var sceneD = 0;
+var sceneD = 7;
 var traffic = new buzz.sound("assets/traffic_short.mp3", {
     preload: true,
-    autoplay: true,
+    autoplay: false,
     loop: true
 });
+    
+var dadCall = new buzz.sound("assets/dad.mp3", {
+    preload: true,
+    autoplay: false,
+    loop: false
+});
+
+var dadCallEnd = new buzz.sound("assets/dad_end.mp3", {
+    preload: true,
+    autoplay: false,
+    loop: false
+});    
     
 $( document ).ready(function() {  
 //    short("", 500, "&quot;I'm ready&quot;");
@@ -39,7 +51,7 @@ $( document ).ready(function() {
 var firstPrompt = setTimeout(function(){short("", 500, "&quot;I'm ready&quot;");}, 0);
 var timerAdd = setInterval(function(){
     timer += 1;
-    if (timer > 300){
+    if (timer > 600){
         restart();
         timer = 0;
     }
@@ -54,13 +66,14 @@ function restart(){
     sceneD = 0;
     short("", 1000, "&quot;I'm ready&quot;");
     $("#dialogue").css("text-align", "left");
+    $("body").css({"background-color":"black", "text-shadow":"none", "color":"white","text-shadow": "0 0 10px #000000"});
     new TypeIt('#dialogue').pause(500).type("<b>Welcome,</b> to begin the memory, please say ");
 } 
     
 if (annyang) {
   var commands = {
     "I'm (ready)": Dad,
-      "I (want)": Annie,
+      "I want": Annie,
       "(It's the one thing) I love doing": Dad,
       "I want to be honest (with you)": Annie,
       "I want to let you know (how I truly feel)":Dad,
@@ -72,6 +85,24 @@ if (annyang) {
       "But there's no point in telling you (if it's just going to make you angry)":Annie,
       "It's okay (this conversation will be over soon)":Dad,
       "(I'm being) given a chance": thankyou,
+      "Hey Dad": Dad,
+      "Do you have some time to talk": Dad,
+      "I wanted to ask for help":Dad,
+      "Can you help me with a project":Dad,
+      "It's about a time in high school":Dad,
+      "Yes":Dad,
+      "Do you remember when I said I wanted to do art":Dad,
+      "Oh":Dad,
+      "Like you don't remember":Dad,
+      "I told you once on the way to school":Dad,
+      "Yeah":Dad,
+      "No it's not":Dad,
+      "But I feel like I told you":Dad,
+      "I'm trying to ask if you remember":Dad,
+      "You don't remember at all":Dad,
+      "Okay":Dad,
+      "Okay but what if I said I wanted to do art":Dad,
+      
       
   };
 
@@ -79,6 +110,7 @@ if (annyang) {
 
 annyang.addCallback('result', function(phrases) {
     micFade();
+    timer = 0;
     
   console.log("I think the user said: ", phrases[0]);
   console.log("But then again, it could be any of the following: ", phrases);
@@ -88,15 +120,17 @@ annyang.addCallback('resultNoMatch', function(phrases){
     var count;
     var responses = ["Hah? What did you say?", "I can't hear you. Speak up.", "Hah?"]
     $("#dialogue").css("text-align", "left");
+    if (sceneD < 7)
+    {
     new TypeIt("#annie").pause(500).delete();
     new TypeIt("#name").pause(500).type("Dad");
-
     new TypeIt("#dialogue").pause(500).type(responses[i]);
     
     if (i < responses.length)
         i++;
     else
         i = 0;
+        
     
     if(errorCount > 3){
         if (dadTalking)
@@ -105,6 +139,7 @@ annyang.addCallback('resultNoMatch', function(phrases){
             Dad();
         errorCount = 0;
     }
+    } 
 });
     
   annyang.start();
@@ -180,17 +215,105 @@ function annie5(){
 
 function thankyou(){
     short("",0,"");
-    new TypeIt("#doze", {speed:150, deleteSpeed:50}).pause(1500).type("多謝").pause(4000).delete();
+    new TypeIt("#doze", {speed:50, deleteSpeed:50}).pause(1500).type("多謝").pause(4000).delete();
     $("#dialogue").css({"text-align":"center","left":"24%"});
-    new TypeIt("#dialogue", {speed:100, deleteSpeed:50}).pause(5000).type("&quot;<b>doh jie</b>&quot;").pause(3000).delete().pause(500).type("&quot;<b>Thank you.</b>&quot;").pause(3000).delete();
+    new TypeIt("#dialogue", {speed:100, deleteSpeed:50}).pause(6000).type("&quot;<b>doh jie</b>&quot;").pause(3000).delete().pause(500).type("&quot;<b>Thank you.</b>&quot;").pause(3000).delete();
+    traffic.fadeOut(5000);
+    setTimeout(dad7C, 20000);
 }
 
+function dad7C(){
+    window.TypeItDefaults.speed=15;
+    $("body").css({"background-color":"white", "text-shadow":"none", "color":"black"});
+    dadCall.play().fadeIn();
+    $("#mic").attr("src", "assets/mic_black.png");
+    
+    setTimeout(function(){short("Dad", 2000, "&quot;Hey Dad.&quot;"); setTimeout(function(){dadCall.togglePlay();}, 2000);},16680); new TypeIt("#dialogue").pause(2000).type("[Dialing]").pause(13000).delete().pause(2000).type("Annie?");
+     
+}
+
+//short("Dad", 500, "&quot;&quot;");    
+function dad8(){
+    dadCall.togglePlay();
+    short("Dad", 3000, "&quot;Do you have some time to talk?&quot;");
+    new TypeIt("#dialogue").pause(500).type("Hi, why are you calling?");
+    setTimeout(function(){dadCall.togglePlay();}, 2700);
+}
+    
+function dad9(){
+    callDialogue("What's going on?", 2100, "&quot;I wanted to ask for help.&quot;", 4200);
+}
+    
+function dad10(){
+    callDialogue("Huh? What'd you say?", 3700, "&quot;Can you help me with a project?&quot;", 6100);
+}
+    
+function dad11(){
+    callDialogue("What kind of project?", 3300, "&quot;It's about a time in high school&quot;", 5000);
+}
+
+function dad12(){
+    callDialogue("A time from high school?", 11000, "&quot;Yes&quot;", 13300);
+}
+function dad13(){
+    callDialogue("About what?", 1000, "&quot;Do you remember when I said I wanted to do art?&quot;", 2100);
+}
+function dad14(){
+    callDialogue("Back in high school...? I don't remember what you said you wanted to do.", 23000, "&quot;Oh...&quot;", 29000);
+}
+function dad15(){
+    callDialogue("Don't you remember? I don't think I knew back then.", 800, "&quot;Like you don't remember?&quot;", 11200);
+}
+function dad16(){
+    callDialogue("Yeah, when did you ever talk to me about that?", 1500, "&quot;I told you once on the way to school&quot;", 5000);
+}   
+function dad17(){
+    callDialogue("Oh, you told me what you wanted to do?", 8000, "&quot;Yeah&quot;", 11500);
+}
+function dad18(){
+    callDialogue("", 2000, "&quot;No, it's not&quot;", 14000);
+    new TypeIt("#dialogue").pause(2000).type("Well, let me think about it...").pause(3000).delete().type("I don't feel like we ever talked about it. This isn't urgent, right?");
+}
+function dad19(){
+    callDialogue("Great, then you can just make up what you said! You don't have to ask me.", 3000, "&quot;But I feel like I told you&quot;", 10000);
+}
+function dad20(){
+    callDialogue("You don't remember?", 3000, "&quot;I'm trying to ask if you remember!&quot;", 6800);
+}
+function dad21(){
+    callDialogue("I definitely don't remember!", 2000, "&quot;You don't remember at all?&quot;", 4900);
+}
+//adding in dialogue
+function dad22(){
+    callDialogue("Yeah! Haha, really!", 1000, "&quot;Okay&quot;", 8500);
+}
+function dad23(){
+    callDialogue("It's not that important that I forgot, right?", 1200, "&quot;No, it's not&quot;", 5500);
+}
+function dad24(){
+    callDialogue("Yeah! So make up whatever! Because no one will know.", 2000, "&quot;Okay, but what if I said I wanted to do art?&quot;", 14000);
+}
+function dad25(){
+    dadCall.pause();
+    dadCallEnd.togglePlay();
+    short("Dad", 2000, "");
+    new TypeIt("#dialogue",{speed:15, deleteSpeed:1,   afterComplete: function (instance) {restart();}}).pause(9200).type("Well... I just know you used to take drawing classes on Sunset, right?").pause(11800).delete().type("And in high school, you did art after school on Mission & 3rd, right?").pause(10500).delete().type("Well, it's okay if you want to do art.").pause(2500).delete().type("Yeah, it's fine.").pause(3000).type(" So even now you want to do art?").pause(3000).delete().type("What does art entail?").pause(3000).delete().pause(1000).type("Yeah, like is design a kind of art?").pause(3000).delete().type("Oh...").pause(1000).type(" Well it's okay. I don't care. You can do whatever you want!").pause(5000).delete().type("The most important thing is that you like it. And if it's also a job that's like the cherry on top!").pause(6000).delete().type("I definitely don't want to hear you say that you found a job but you don't like what you're doing.").pause(6000).delete().type("That's no good.").pause().type(" I want to hear you say, &quot;I enjoy what I'm doing.&quot;").pause(2500).delete().type("And, most importantly, ").pause(2000).type("that you have food on the table.").pause(1000).type(" Right? Haha!").pause(2000).delete().type("Just, you know how some artists only are famous after they die? And their lives are very hard up until then?").pause(13000).delete().type("Their life isn't easy. ").pause(3000).type("That's why the most important thing is that you have food to eat.").pause(3000).delete().type("Being rich isn't important.").pause(3000).type(" Just have a place to live. ").pause(1000).type("Food to eat. ").pause(1000).type("Then everything's okay.").pause(4000).delete().type("Yeah, the most important thing is that you like what you're doing.").pause(4000).delete().type("Don't worry about what I think.").pause(3000).type(" Because I'm 70 already!").pause(5000).delete().type("It's your life, not mine, right?").pause(5000).type(" Okay, everything's okay. Don't worry about it!").pause(3500).delete().type("Yeah, as long as you like what you're doing, it's enough.").pause(1500).delete().type("Okay! I'm behind you!").pause(1000).type(" Hahaha, okay is that all?").pause(5000).delete().type("Okay, just remember to enjoy what you're doing. Bye!").pause(5000).delete();
+}
+ 
+    
+function callDialogue(dialogue, dialoguePause, prompt, audioLength){
+    dadCall.togglePlay();
+    new TypeIt("#dialogue").pause(dialoguePause).type(dialogue);
+    short("", audioLength, prompt);
+    new TypeIt("#name").pause(dialoguePause).type("Dad");
+    setTimeout(function(){dadCall.togglePlay();}, audioLength);
+}    
 function imgChange(source){
     var string = "assets/imgs/";
     string = string.concat(source);
     $("#bg").attr("src", string);
     $("#bg").fadeIn(2500);
-    setInterval(function(){
+    setTimeout(function(){
         $("#bg").fadeOut(1000);
     }, 6000);
 }    
@@ -216,6 +339,9 @@ function short(name, promptDelay, prompt)
             }
         new TypeIt("#prompt").pause(promptDelay).type(prompt);
     }
+    
+function toggleDad(name, dialogue){
+}
 
 function Annie(){
     dadTalking = false;
@@ -264,6 +390,63 @@ function Dad(){
         case 6:
             dad6();
             break;
+        case 7:
+            dad7C();
+            break;
+        case 8:
+            dad8();
+            break;
+        case 9:
+            dad9();
+            break;
+        case 10:
+            dad10();
+            break;
+        case 11: 
+            dad11();
+            break;
+        case 12:
+            dad12();
+            break;
+        case 13:
+            dad13();
+            break;
+        case 14:
+            dad14();
+            break;
+        case 15:
+            dad15();
+            break;
+        case 16:
+            dad16();
+            break;
+        case 17:
+            dad17();
+            break;
+        case 18:
+            dad18();
+            break;
+        case 19:
+            dad19();
+            break;
+        case 20:
+            dad20();
+            break;
+        case 21: 
+            dad21();
+            break;
+        case 22:
+            dad22();
+            break;
+        case 23:
+            dad23();
+            break;
+        case 24:
+            dad24();
+            break;
+        case 25:
+            dad25();
+            break;
         default:
             break;
                 
@@ -279,9 +462,11 @@ function Dad(){
     
     <body>
         
+<!--
         <button type="button" onclick="Dad();">dad</button>
-        <button type="button" onclick="Annie();">annie</button>
-        <button type="button" onclick="thankyou();">end</button><br/>
+        <button type="button" onclick="dad25();">dad25</button>
+-->
+<!--        <button type="button" onclick="dad7C();">end</button><br/>-->
         <span id="name"></span>
         <span id="annie"></span>
         <span id="dialogue"><b>Welcome,</b> to begin the memory, please say </span>
