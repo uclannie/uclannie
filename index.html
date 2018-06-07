@@ -63,6 +63,7 @@ function restart(){
     i = 0;
     errorCount = 0;
     dadTalking = false;
+    timer = 0;
     sceneA = 0;
     sceneD = 0;
     short("", 1000, "&quot;I'm ready&quot;");
@@ -112,17 +113,21 @@ if (annyang) {
 
 annyang.addCallback('result', function(phrases) {
     micFade();
-    timer = 0;
     
   console.log("I think the user said: ", phrases[0]);
   console.log("But then again, it could be any of the following: ", phrases);
+});
+    
+annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
+    micFade();
+    timer = 0;
 });
     
 annyang.addCallback('resultNoMatch', function(phrases){
     var count;
     var responses = ["Hah? What did you say?", "I can't hear you. Speak up.", "Hah?"]
     $("#dialogue").css("text-align", "left");
-    if (sceneD < 7)
+    if (sceneD < 7 && sceneD > 1)
     {
     new TypeIt("#annie").pause(500).delete();
     new TypeIt("#name").pause(500).type("Dad");
