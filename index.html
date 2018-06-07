@@ -84,7 +84,7 @@ if (annyang) {
       "No (that's not what I meant)":Annie,
       "I wasn't trying to start a fight":Dad,
       "(I'm not saying that) I don't want to work hard":Annie,
-      "I just wanted to let you know (what I actually want to do)":Dad,
+      "I just wanted to let you know (how I felt)":Dad,
       "But there's no point in telling you (if it's just going to make you angry)":Annie,
       "It's okay (this conversation will be over soon)":Dad,
       "(I'm being) given a chance": thankyou,
@@ -126,29 +126,30 @@ annyang.addCallback('resultMatch', function(userSaid, commandText, phrases) {
 });
     
 annyang.addCallback('resultNoMatch', function(phrases){
-    var count;
+    errorCount += 1;
     var responses = ["Hah? What did you say?", "I can't hear you. Speak up.", "Hah?"]
     $("#dialogue").css("text-align", "left");
-    if (sceneD < 7 && sceneD > 1)
+    if (sceneD < 7 && sceneD > 1 && errorCount > 4)
     {
-    new TypeIt("#annie").pause(500).delete();
-    new TypeIt("#name").pause(500).type("Dad");
-    new TypeIt("#dialogue").pause(500).type(responses[i]);
+        new TypeIt("#annie").pause(500).delete();
+        new TypeIt("#name").pause(500).type("Dad");
+        new TypeIt("#dialogue").pause(500).type(responses[i]);
     
-    if (i < responses.length)
-        i++;
-    else
-        i = 0;
-        
-    
-    if(errorCount > 3){
-        if (dadTalking)
-            Annie();
+        if (i < responses.length)
+        {i++;}
         else
-            Dad();
-        errorCount = 0;
+            {
+                i = 0;
+                if (dadTalking)
+                Annie();
+                else
+                Dad();
+                errorCount = 0;
+
+        }
+        
     }
-    } 
+     
 });
     
   annyang.start();
@@ -215,7 +216,7 @@ function annie3(){
 }
 
 function annie4(){
-    short("Annie", 3000, "&quot;I just wanted to let you know what I actually want to do.&quot;");
+    short("Annie", 3000, "&quot;I just wanted to let you know how I felt.&quot;");
     new TypeIt("#dialogue").pause(2000).type("...");
 }    
 
@@ -284,7 +285,7 @@ function dad17(){
     callDialogue("Oh, you told me what you wanted to do?", 8000, "&quot;Yeah&quot;", 11500);
 }
 function dad18(){
-    callDialogue("", 2000, "&quot;No, it's not&quot;", 14000);
+    callDialogue("", 2000, "&quot;No, it's not&quot;", 15000);
     new TypeIt("#dialogue").pause(2000).type("Well, let me think about it...").pause(3000).delete().type("I don't feel like we ever talked about it. This isn't urgent, right?");
 }
 function dad19(){
@@ -301,7 +302,7 @@ function dad22(){
     callDialogue("Yeah! Haha, really!", 1000, "&quot;Okay&quot;", 8500);
 }
 function dad23(){
-    callDialogue("It's not that important that I forgot, right?", 1200, "&quot;No, it's not&quot;", 5500);
+    callDialogue("It's not that important that I forgot, right?", 1200, "&quot;No, it's not&quot;", 6000);
 }
 function dad24(){
     callDialogue("Yeah! So make up whatever! Because no one will know.", 2000, "&quot;Okay, but what if I said I wanted to do art?&quot;", 14000);
@@ -475,11 +476,9 @@ function Dad(){
     
     <body>
         
-<!--
-        <button type="button" onclick="Dad();">dad</button>
-        <button type="button" onclick="dad25();">dad25</button>
--->
-<!--        <button type="button" onclick="dad7C();">end</button><br/>-->
+<!--        <button type="button" onclick="Dad();">dad</button>-->
+<!--        <button type="button" onclick="dad25();">dad25</button>-->
+        <button type="button" onclick="dad7C();">end</button><br/>
         <span id="name"></span>
         <span id="annie"></span>
         <span id="dialogue"><b>Welcome,</b> to begin the memory, please say </span>
