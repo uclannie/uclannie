@@ -62,6 +62,8 @@ var timerAdd = setInterval(function(){
 }, 1000);    
     
 function restart(){
+    dadCall.stop();
+    dadCallEnd.stop();
     i = 0;
     errorCount = 0;
     dadTalking = false;
@@ -111,6 +113,7 @@ if (annyang) {
       "restart":restart,
       "refresh":refresh,
       "skip":skip,
+      "play the end":dad25,
       
       
   };
@@ -242,9 +245,9 @@ function thankyou(){
     short("",0,"");
     new TypeIt("#doze", {speed:50, deleteSpeed:50}).pause(1500).type("多謝").pause(4000).delete();
     $("#dialogue").css({"text-align":"center","left":"24%"});
-    new TypeIt("#dialogue", {speed:100, deleteSpeed:50}).pause(6000).type("&quot;<b>doh jie</b>&quot;").pause(3000).delete().pause(500).type("&quot;<b>Thank you.</b>&quot;").pause(3000).delete();
+    new TypeIt("#dialogue", {speed:30}).pause(6000).type("&quot;<b>Doh jie</b>&quot; means thank you in Cantonese.").pause(3000).delete().pause(500).type("<b>Thank you</b> for that conversation 4 years ago.").pause(1500).delete().pause(500).type("<b>Thank you</b> for this conversation we had 4 years later.").pause(3000).delete();
     traffic.fadeOut(5000);
-    setTimeout(dad7C, 20000);
+    setTimeout(dad7C, 21000);
 }
 
 function dad7C(){
@@ -489,7 +492,7 @@ function Dad(){
     
     <body>
         
-<!--        <button type="button" onclick="Dad();">dad</button>-->
+        <button type="button" onclick="thankyou();">dad</button>
 <!--        <button type="button" onclick="dad25();">dad25</button>-->
 <!--        <button type="button" onclick="dad7C();">end</button><br/>-->
         <span id="name"></span>
