@@ -73,7 +73,8 @@ function restart(){
     $("body").css({"background-color":"black", "text-shadow":"none", "color":"white","text-shadow": "0 0 10px #000000"});
     $("#mic").attr("src", "assets/mic.png");
     new TypeIt('#dialogue').pause(500).type("<b>Welcome,</b> to begin the memory, please say ");
-} 
+}   
+
     
 if (annyang) {
   var commands = {
@@ -109,6 +110,7 @@ if (annyang) {
       "Okay but what if I said I wanted to do art":Dad,
       "restart":restart,
       "refresh":refresh,
+      "skip":skip,
       
       
   };
@@ -173,7 +175,10 @@ function micFade(){
 }
 function refresh(){
     location.reload(true);
-}  
+} 
+
+function skip(){sceneD=6; dad7C();}
+    
 function dad1(){
     traffic.loop().play().fadeIn();
     imgChange("steering.jpg");
